@@ -1,1 +1,30 @@
-hello world
+<!DOCTYPE html>
+<!--each html contains one head and one body-->
+<!--css code should goes to <head></head>-->
+<!--link element to call css file-->
+<html>
+  <head>
+    <title>data home</title>
+    <link rel="stylesheet" href="styles/buttons.css">
+  </head>
+  <body>
+    <p>
+      paragraph of text
+    </p>
+
+    <button class="tweet-button" 
+    onclick = "openNewWindow('youtube.html')">
+      faked Youtube
+    </button>
+
+    <a href="youtube.html" target="blank">
+      faked Youtube
+    </a>
+
+    <script>
+      function openNewWindow(a_html) {
+        window.open(a_html, '_blank');
+      }
+    </script>
+  </body>
+</html>
