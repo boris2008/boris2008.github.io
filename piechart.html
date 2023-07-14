@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>pie chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="styles/plot.css">
+  </head>
+  <body>
+    <main>
+    
+      <div id="pieChart1"></div>
+      <div id="pieChart2"></div>
+     
+    </main>
+    <script>
+      // Dataset for Pie Chart 1
+      const dataset1 = [
+        { region: "west", percentage: 17.6, color: "green" },
+        { region: "midwest", percentage: 26.93, color: "blue" },
+        { region: "south", percentage: 38.37, color: "red" },
+        { region: "northeast", percentage: 17.1, color: "orange" }
+      ];
+    
+      // Dataset for Pie Chart 2
+      const dataset2 = [
+        { region: "A", percentage: 40, color: "green" },
+        { region: "B", percentage: 30, color: "blue" },
+        { region: "C", percentage: 20, color: "red" },
+        { region: "D", percentage: 10, color: "orange" }
+      ];
+    
+      // Set the dimensions and margins of the graph
+      const width = 1200;
+      const height = 400;
+      const radius = Math.min(width, height) / 2;
+      const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+    
+      // Create SVG element for Pie Chart 1
+      const svg1 = d3
+        .select("#pieChart1") // Select the div with ID "pieChart1"
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${width / 2+400},${height / 2})`);
+    
+      // Generate pie slices for Pie Chart 1
+      const pie1 = d3
+        .pie()
+        .value(d => d.percentage)
+        .sort(null);
+    
+      // Define arc for Pie Chart 1
+      const arc1 = d3
+        .arc()
+        .innerRadius(150)
+        .outerRadius(radius);
+    
+      // Create arcs for Pie Chart 1
+      const arcs1 = svg1
+        .selectAll("arc")
+        .data(pie1(dataset1))
+        .enter()
+        .append("g");
+    
+      // Draw each slice for Pie Chart 1
+      arcs1
+        .append("path")
+        .attr("d", arc1)
+        .attr("fill", d => d.data.color)
+        .attr("stroke", "white")
+        .style("stroke-width", "2px");
+    
+      // Add region labels for Pie Chart 1
+      arcs1
+        .append("text")
+        .attr("transform", d => `translate(${arc1.centroid(d)})`)
+        .attr("text-anchor", "middle")
+        .text(d => d.data.region)
+        .style("font-size", "12px");
+    
+      // Create SVG element for Pie Chart 2
+      const svg2 = d3
+        .select("#pieChart2") // Select the div with ID "pieChart2"
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${width / 2},${height / 2})`);
+    
+      // Generate pie slices for Pie Chart 2
+      const pie2 = d3
+        .pie()
+        .value(d => d.percentage)
+        .sort(null);
+    
+      // Define arc for Pie Chart 2
+      const arc2 = d3
+        .arc()
+        .innerRadius(0)
+        .outerRadius(radius);
+    
+      // Create arcs for Pie Chart 2
+      const arcs2 = svg2
+        .selectAll("arc")
+        .data(pie2(dataset2))
+        .enter()
+        .append("g");
+    
+      // Draw each slice for Pie Chart 2
+      arcs2
+        .append("path")
+        .attr("d", arc2)
+        .attr("fill", d => d.data.color)
+        .attr("stroke", "white")
+        .style("stroke-width", "2px");
+    
+      // Add region labels for Pie Chart 2
+      arcs2
+        .append("text")
+        .attr("transform", d => `translate(${arc2.centroid(d)})`)
+        .attr("text-anchor", "middle")
+        .text(d => d.data.region)
+        .style("font-size", "12px");
+    </script>
+    
+  </body>
+</html>

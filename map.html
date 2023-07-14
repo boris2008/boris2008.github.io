@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>United States Map</title>
+  <style>
+    .state {
+      fill: gray;
+      opacity: 0.2;
+      stroke: #fff;
+      stroke-width: 1px;
+    }
+    .highlight {
+      fill: #ff0000; /* Change color to your desired special color */
+    }
+    .tooltip {
+      position: absolute;
+      background: #fff;
+      padding: 5px;
+      border: 1px solid #ccc;
+      pointer-events: none;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <svg id="map"></svg>
+
+  <script src="data/d3js.org_d3.v5.min.js"></script>
+  <script src="data/topojson.js"></script>
+  <script>
+    // Set up dimensions
+    var width = 960;
+    var height = 600;
+
+    // Create SVG element
+    var svg = d3.select("#map")
+      .attr("width", width)
+      .attr("height", height);
+
+    // Load map data
+    d3.json("data/us-10m.v1.json").then(function(us) {
+      
+      // Load revenue data
+      d3.csv("data/test_map.csv").then(function(data) {
+        console.log(data);
+        // Convert revenue data to dictionary
+        var revenueData = {};
+        data.forEach(function(d) {
+          revenueData[d.state_id] = {
+            abbreviation: d.state_abbreviation,
+            revenue: +d.revenue
+          };
+        });
+
+        // Define projection
+        var projection = d3.geoAlbersUsa()
+          .scale(720)
+          .translate([width / 2, height / 2]);
+
+        // Define path generator
+        var path = d3.geoPath()
+          .projection(projection);
+
+        // Draw map
+        svg.append("g")
+          .attr("class", "states")
+          .selectAll("path")
+          .data(topojson.feature(us, us.objects.states).features)
+          .enter().append("path")
+          .attr("class", "state")
+          .attr("d", path)
+          .attr("opacity", function(d) {
+            return revenueData[d.id] ? 1 : 0.2; // Set opacity based on data availability
+          })
+          .attr("fill", function(d) {
+            return revenueData[d.id] ? "red" : "gray"; // Set color based on data availability
+          })
+          .text(function(d) {
+            return revenueData[d.id] ? revenueData[d.id].abbreviation : ""; // Set state abbreviation as text
+          })
+          .on("mouseover", function(d) {
+            var stateData = revenueData[d.id] || {};
+            tooltip.html(stateData.abbreviation + ": $" + (stateData.revenue || "N/A"))
+              .style("left", (d3.event.pageX + 10) + "px")
+              .style("top", (d3.event.pageY - 25) + "px")
+              .style("opacity", 1);
+          })
+          .on("mouseout", function() {
+            tooltip.style("opacity", 0);
+          });
+
+        // Add tooltip
+        var tooltip = d3.select("body")
+          .append("div")
+          .attr("class", "tooltip")
+          .style("opacity", 0);
+      });
+    });
+  </script>
+</body>
+</html>

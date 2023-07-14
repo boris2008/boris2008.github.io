@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>United States Map</title>
+  <style>
+    .state {
+      fill: gray;
+      stroke: #fff;
+      stroke-width: 1px;
+    }
+  </style>
+</head>
+<body>
+  <svg id="map"></svg>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
+  <script>
+    // Set up dimensions
+    var width = 960;
+    var height = 600;
+
+    // Create SVG element
+    var svg = d3.select("#map")
+      .attr("width", width)
+      .attr("height", height);
+
+    // Load map data
+    d3.json("https://d3js.org/us-10m.v1.json").then(function(us) {
+      // Define path generator
+      var path = d3.geoPath();
+
+      // Filter and color the states in the west region
+      var westRegionFips = ["53", "41", "06", "32", "04", "16", "30", "56", "08", "35", "49","02","15"];
+      //midwest: 17,18,19,20,26,27,38,39,46,55
+      //south:01,05,12,13,22,28,37,45,47,48,54 
+      //northeast:09,23,25,33,34,36,42,44,50
+
+
+
+      svg.append("g")
+        .attr("class", "states")
+        .selectAll("path")
+        .data(topojson.feature(us, us.objects.states).features)
+        .enter().append("path")
+        .attr("class", "state")
+        .attr("d", path)
+        .style("fill", function(d) {
+          return westRegionFips.includes(d.id) ? "green" : "gray";
+        });
+    });
+  </script>
+</body>
+</html>
