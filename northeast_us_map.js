@@ -11,7 +11,7 @@ var svg = d3.select("#us_map")
   .attr("y", 20) // Set the y position of the text
   .attr("text-anchor", "middle") // Set the text anchor to middle
   .attr("font-size", "25px") // Set the font size
-  .text("West States Revenue"); // Set the text content of the title
+  .text("NorthEast States Revenue"); // Set the text content of the title
 // Add tooltip div
 var tooltip = d3.select("#column1").append("div")
   .attr("class", "tooltip")
@@ -44,7 +44,7 @@ Promise.all([
 
   // Filter and color the states in the west region
     // Filter and color the states in the west region
-  var westRegionFips = ["53", "41", "06", "32", "04", "16", "30", "56", "08", "35", "49","02","15"];
+  var RegionFips = ['09','23','25','33','34','36','42','44','50'];
     //midwest: 17,18,19,20,26,27,38,39,46,55
     //south:01,05,12,13,22,28,37,45,47,48,54 
     //northeast:09,23,25,33,34,36,42,44,50
@@ -59,7 +59,7 @@ Promise.all([
   .attr("class", "state")
   .attr("d", path)
   .style("fill", function(d){
-    return westRegionFips.includes(d.id)? "green" : "gray";
+    return RegionFips.includes(d.id)? "orange" : "gray";
   })
   .on("mouseover", function (d) {
     var fips = d.id;

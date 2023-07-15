@@ -23,6 +23,15 @@
   align-items: center;
 
 }
+.column3 {
+  flex: 1;
+  position: relative;
+  margin-left: 100px;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+
+}
 
 #pieChart1 {
   position: absolute;

@@ -4,7 +4,7 @@
 <!--link element to call css file-->
 <html>
   <head>
-    <title>data home</title>
+    <title>South Region</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -19,57 +19,35 @@
   <body>
     <header class="topic">
       <div >
-        Revenue By Geography
-        created by Bocheng Yin
+        Revenue of South States
       </div>
       <div class="separate_row">
         **************
       </div>
 
       <div >
-       This is the Home Page
+       This is the "South" Page
       </div>
       <div class="separate_row">
         **************
       </div>
-      <div>Use left sideBar to navigate among different regions</div>  
+      <div>States in South Region are in Red</div>  
+      <div class="separate_row">
+        **************
+      </div>
+      <div class="separate_row">
+        **************
+      </div>
+      <div>Hover over the state in the map</div>  
+      <div class="separate_row">
+        **************
+      </div>
 
-      <div class="separate_row">
-        **************
-      </div>
-      <div>
-        <a href="https://github.com/stanley-george-joseph/Customer-Analysis-Tableau" target="blank">
-          The data presented here is the Sales Revenue of the fiscal year of 2020-2021 in the United States.
-        </a>
-      </div>
       
     </header>
  
     <nav class="navbar">
-      <div class="navbar-link">
-        <img src="icons/home.svg">
-        <div>Home</div>
-      </div>
-      <div class="navbar-annotation">
-        Select Region Below
-      </div>
-      </div>
-      <div class="navbar-link" onclick = "openNewWindow('MidWest_region.html')">
-        <img src="icons/explore.svg">
-        <div style="color: blue;">Midwest</div>
-      </div>
-      <div class="navbar-link" onclick = "openNewWindow('northeast_region.html')">
-        <img src="icons/explore.svg">
-        <div style="color: orange;">NorthEast</div>
-      </div>
-      <div class="navbar-link" onclick = "openNewWindow('south_region.html')">
-        <img src="icons/explore.svg">
-        <div style="color: red;">South</div>
-      </div>
-      <div class="navbar-link" onclick = "openNewWindow('west_region.html')">
-        <img src="icons/explore.svg">
-        <div style="color: green;">West</div>
-      </div>
+
 
     </nav>
 
@@ -78,8 +56,8 @@
         <div class="column1" id="column1">
           <div><svg id="us_map"></svg></div>
         </div>
-        <div class="column2" id="column2">
-          <div><svg id="pieChart1"></svg></div>
+        <div class="column3" id="column2">
+          <div><svg id="barPlot"></svg></div>
         </div>
       </div>
     </main>
@@ -87,12 +65,17 @@
     <script>
       function openNewWindow(a_html) {
         window.open(a_html, '_blank');
-      }
+
+        }
+
+        
+      
     </script> 
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
-    <script src="us_map_only.js"></script>
-    <script src="piechart.js"></script>
+    <script src="south_us_map.js"></script>
+    <script src="barPlot.js"></script>
+    <script>createBarPlot("data/south_categ_revenue.csv")</script>
 
   </body>
 </html>
